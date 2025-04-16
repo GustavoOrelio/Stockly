@@ -8,7 +8,7 @@ export interface DayTotalRevenueDto {
 }
 
 export const getLast14DaysRevenue = async (): Promise<DayTotalRevenueDto[]> => {
-  await new Promise((resolve) => setTimeout(resolve, 5000));
+  await new Promise((resolve) => setTimeout(resolve, 3000));
   const today = dayjs().endOf("day").toDate();
   const last14Days = [13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0].map(
     (day) => {
@@ -21,11 +21,11 @@ export const getLast14DaysRevenue = async (): Promise<DayTotalRevenueDto[]> => {
       { totalRevenue: number }[]
     >(
       `
-       SELECT SUM("SaleProduct"."unitPrice" * "SaleProduct"."quantity") as "totalRevenue"
-       FROM "SaleProduct"
-       JOIN "Sale" ON "SaleProduct"."saleId" = "Sale"."id"
-       WHERE "Sale"."date" >= $1 AND "Sale"."date" <= $2;
-       `,
+      SELECT SUM("SaleProduct"."unitPrice" * "SaleProduct"."quantity") as "totalRevenue"
+      FROM "SaleProduct"
+      JOIN "Sale" ON "SaleProduct"."saleId" = "Sale"."id"
+      WHERE "Sale"."date" >= $1 AND "Sale"."date" <= $2;
+      `,
       day.startOf("day").toDate(),
       day.endOf("day").toDate(),
     );
