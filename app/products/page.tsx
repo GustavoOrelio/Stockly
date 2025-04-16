@@ -9,6 +9,10 @@ import Header, {
   HeaderTitle,
 } from "../_components/header";
 
+// Essa página será montada uma vez e reutilizada (SSG), podendo ser incrementada de forma regenerativa (ISR)
+export const dynamic = "force-static";
+export const revalidate = 10;
+
 const ProductsPage = async () => {
   const products = await getProducts();
   return (
